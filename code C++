@@ -1,0 +1,1286 @@
+#include <iostream>
+#include <fstream>
+#include <stdlib.h>
+#include <iomanip>
+#include <string>
+
+using namespace std;
+
+struct Athlete {
+    int athleteNumber;
+    string name;
+    int age;
+    string discipline;
+    float bestCareerResult;
+    float bestResultThisYear;
+    int participationCount;
+    string country;
+    float result;
+    int place;
+};
+
+void displayMenu()
+{
+    cout
+        << "\n==========MENU==========\n"
+        << "1.  Add new athelet(s)\n"
+        << "2.  Display all athlete(s)\n"
+        << "3.  Display the athlete(s) with most participations\n"
+        << "4.  Find athlete(s) by country\n"
+        << "5.  Sort athlete(s) by sport\n"
+        << "6.  Manage file\n"
+        << "7.  Additional features\n"
+        << "8.  Start a competition\n"
+        << "9.  Display table of medals\n"
+        << "0.  Save and Exit\n"
+        << "=========================\n"
+        << "Enter your choice: ";
+}
+
+void addAthletes(Athlete a[], int &b, int &c1, int &c2, int &c3, int &c4, int &c5, bool &comp)
+{
+    int count;
+    int choice;
+    int choice2;
+    bool valid = true;
+    int v_age;
+    float v_best;
+    int v_count = 0;
+    int v_count1;
+    bool valid2 = true;
+    bool valid3 = false;
+    do
+    {
+        valid3 = false;
+        cout << "Enter the number of athletes to add: ";
+        cin >> v_count1;
+        if (v_count1 < 1)
+        {
+            cout << "\nEnter valid number of athletes to add!\n";
+            valid3 = false;
+            continue;
+        }
+        if (b >= 35)
+        {
+            cout << "\nYou have already reached the limit of 35 athletes you can add!\n";
+            valid3 = false;
+            return;
+        }
+        if (b + v_count1 > 35)
+        {
+            cout << "\nIf you add " << v_count1 << " athletes, you will exceed the limit of 35 athletes you can add!\n";
+            valid3 = false;
+            continue;
+        }
+        else
+        { 
+            count = v_count1;
+            valid3 = true;
+        }
+    } while (!valid3);
+    for (int i = 0; i < count; i++)
+    {
+        a[b].athleteNumber = b + 1;
+        cout << "\nEnter information for athlete #" << a[b].athleteNumber << ":\n";
+        cout << "Name: ";
+        cin >> a[b].name;
+        do
+        {
+            cout << "Age: ";
+            cin >> v_age;
+            if (v_age < 16)
+                cout << "\nEnter a valid age!\n";
+            else
+                a[b].age = v_age;
+        } while (v_age < 16);
+        do
+        {
+            do
+            {
+                valid = true;
+                cout
+                    << "Disciplines:\n"
+                    << "1.   200m sprint\n"
+                    << "2.   4x400 relay\n"
+                    << "3.   Shot put\n"
+                    << "4.   Pole Vault\n"
+                    << "5.   Triple jump\n"
+                    << "Enter your choice: ";
+                cin >> choice;
+                switch (choice)
+                {
+                case 1:
+                    if (c1 < 7)
+                    {
+                        c1++;
+                        a[b].discipline = "200m sprint";
+                    }
+                    else
+                    {
+                        cout << "\nYou exceed the limit of 7 athletes in a discipline\n";
+                        valid = false;
+                    }
+                    break;
+                case 2:
+                    if (c2 < 7)
+                    {
+                        c2++;
+                        a[b].discipline = "4x400 relay";
+                    }
+                    else
+                    {
+                        cout << "\nYou exceed the limit of 7 athletes in a discipline\n";
+                        valid = false;
+                    }
+                    break;
+                case 3:
+                    if (c3 < 7)
+                    {
+                        c3++;
+                        a[b].discipline = "Shot put";
+                    }
+                    else
+                    {
+                        cout << "\nYou exceed the limit of 7 athletes in a discipline\n";
+                        valid = false;
+                    }
+                    break;
+                case 4:
+                    if (c4 < 7)
+                    {
+                        c4++;
+                        a[b].discipline = "Pole Vault";
+                    }
+                    else
+                    {
+                        cout << "\nYou exceed the limit of 7 athletes in a discipline\n";
+                        valid = false;
+                    }
+                    break;
+                case 5:
+                    if (c5 < 7)
+                    {
+                        c5++;
+                        a[b].discipline = "Triple jump";
+                    }
+                    else
+                    {
+                        cout << "\nYou exceed the limit of 7 athletes in a discipline\n";
+                        valid = false;
+                    }
+                    break;
+                default:
+                    cout << "\nInvalid choice. Please try again.\n";
+                    break;
+                }
+            } while (!valid);
+        } while (choice < 1 || choice>5);
+        switch (choice)
+        {
+        case 1:
+            cout << "Best Career Result(in seconds): ";
+            cin >> a[b].bestCareerResult;
+            break;
+        case 2:
+            cout << "Best Career Result(in seconds): ";
+            cin >> a[b].bestCareerResult;
+            break;
+        case 3:
+            cout << "Best Career Result(in meters): ";
+            cin >> a[b].bestCareerResult;
+            break;
+        case 4:
+            cout << "Best Career Result(in meters): ";
+            cin >> a[b].bestCareerResult;
+            break;
+        case 5:
+            cout << "Best Career Result(in meters): ";
+            cin >> a[b].bestCareerResult;
+            break;
+        default:
+            break;
+        }
+        do
+        {
+            valid2 = true;
+            switch (choice)
+            {
+            case 1:
+                cout << "Best Result This Year(in seconds): ";
+                cin >> v_best;
+                break;
+            case 2:
+                cout << "Best Result This Year(in seconds): ";
+                cin >> v_best;
+                break;
+            case 3:
+                cout << "Best Result This Year(in meters): ";
+                cin >> v_best;
+                break;
+            case 4:
+                cout << "Best Result This Year(in meters): ";
+                cin >> v_best;
+                break;
+            case 5:
+                cout << "Best Result This Year(in meters): ";
+                cin >> v_best;
+                break;
+            default:
+                break;
+            }
+            switch (choice)
+            {
+            case 1:
+                if (v_best < a[b].bestCareerResult)
+                {
+                    cout << "\nEnter valid best result this year!\n";
+                    valid2 = false;
+                }
+                else
+                    a[b].bestResultThisYear = v_best;
+                break;
+            case 2:
+                if (v_best < a[b].bestCareerResult)
+                {
+                    cout << "\nEnter valid best result this year!\n";
+                    valid2 = false;
+                }
+                else
+                    a[b].bestResultThisYear = v_best;
+                break;
+            case 3:
+                if (v_best > a[b].bestCareerResult)
+                {
+                    cout << "\nEnter valid best result this year!\n";
+                    valid2 = false;
+                }
+                else
+                    a[b].bestResultThisYear = v_best;
+                break;
+            case 4:
+                if (v_best > a[b].bestCareerResult)
+                {
+                    cout << "\nEnter valid best result this year!\n";
+                    valid2 = false;
+                }
+                else
+                    a[b].bestResultThisYear = v_best;
+                break;
+            case 5:
+                if (v_best > a[b].bestCareerResult)
+                {
+                    cout << "\nEnter valid best result this year!\n";
+                    valid2 = false;
+                }
+                else
+                    a[b].bestResultThisYear = v_best;
+                break;
+            default:
+                break;
+            }
+        } while (!valid2);
+        do
+        {
+            cout << "Participation(s) Count: ";
+            cin >> v_count;
+            if (v_count < 1 || a[b].age - 15 < v_count)
+                cout << "\nEnter valid participation(s) count!\n";
+            else
+                a[b].participationCount = v_count;
+        } while (v_count < 1 || a[b].age - 15 < v_count);
+        do
+        {
+            cout
+                << "Countries:\n"
+                << "1.   Albania\n"
+                << "2.   Bosnia and Herzegovina\n"
+                << "3.   Bulgaria\n"
+                << "4.   Greece\n"
+                << "5.   Kosovo\n"
+                << "6.   North Macedonia\n"
+                << "7.   Montenegro\n"
+                << "Enter your choice: ";
+            cin >> choice2;
+            switch (choice2)
+            {
+            case 1:
+                a[b].country = "Albania";
+                break;
+            case 2:
+                a[b].country = "Bosnia and Herzegovina";
+                break;
+            case 3:
+                a[b].country = "Bulgaria";
+                break;
+            case 4:
+                a[b].country = "Greece";
+                break;
+            case 5:
+                a[b].country = "Kosovo";
+                break;
+            case 6:
+                a[b].country = "North Macedonia";
+                break;
+            case 7:
+                a[b].country = "Montenegro";
+                break;
+            default:
+                cout << "\nInvalid choice. Please try again.\n";
+                break;
+            }
+        } while (choice2 < 1 || choice2 > 7);
+        a[b].place = 1;
+        b++;
+    }
+    cout << "\n" << count << " athletes were successfully added.\n";
+    comp = false;
+}
+
+void displayAthletes(Athlete a[], int b)
+{
+    if (b == 0)
+    {
+        cout << "\nNo athletes has been added.\n";
+        return;
+    }
+    int c = 0;
+    cout << "\n==========LIST OF ATHLETES==========\n\n";
+    for (int i = 0;i < b;i++)
+    {
+        if (a[i].discipline == "200m sprint"|| a[i].discipline == "4x400 relay") c = 1;
+        else if (a[i].discipline == "Shot put"|| a[i].discipline == "Pole Vault"||a[i].discipline=="Triple jump") c = 2;
+        switch (c)
+        {
+        case 1:
+            cout
+                << "Athlete #" << a[i].athleteNumber << ":\n"
+                << "Name: " << a[i].name << endl
+                << "Age: " << a[i].age << endl
+                << "Discipline: " << a[i].discipline << endl
+                << "Best Career Result: " << a[i].bestCareerResult << " s" << endl
+                << "Best Result This Year: " << a[i].bestResultThisYear << " s" << endl
+                << "Participation(s) Count: " << a[i].participationCount << endl
+                << "Country: " << a[i].country << endl << endl;
+            break;
+        case 2:
+            cout
+                << "Athlete #" << a[i].athleteNumber << ":\n"
+                << "Name: " << a[i].name << endl
+                << "Age: " << a[i].age << endl
+                << "Discipline: " << a[i].discipline << endl
+                << "Best Career Result: " << a[i].bestCareerResult << " m" << endl
+                << "Best Result This Year: " << a[i].bestResultThisYear << " m" << endl
+                << "Participation(s) Count: " << a[i].participationCount << endl
+                << "Country: " << a[i].country << endl << endl;
+            break;
+        default:
+            break;
+        }
+    }
+    cout << "\n==============================\n";
+}
+
+void findAthleteWithMostParticipations(Athlete a[], int b)
+{
+    if (b == 0)
+    {
+        cout << "\nNo athletes has been added.\n";
+        return;
+    }
+    int max_count = a[0].participationCount;
+    int c;
+    for (int i = 0;i < b;i++)
+        if (a[i].participationCount > max_count)
+            max_count = a[i].participationCount;
+    cout << "\nThe athlete(s) with most participations:\n\n";
+    for (int i = 0;i < b;i++)
+        if (a[i].participationCount == max_count)
+        {
+            if (a[i].discipline == "200m sprint" || a[i].discipline == "4x400 relay") c = 1;
+            else if (a[i].discipline == "Shot put" || a[i].discipline == "Pole Vault" || a[i].discipline == "Triple jump") c = 2;
+            switch (c)
+            {
+            case 1:
+                cout
+                    << "Athlete #" << a[i].athleteNumber << ":\n"
+                    << "Name: " << a[i].name << endl
+                    << "Age: " << a[i].age << endl
+                    << "Discipline: " << a[i].discipline << endl
+                    << "Best Career Result: " << a[i].bestCareerResult << " s" << endl
+                    << "Best Result This Year: " << a[i].bestResultThisYear << " s" << endl
+                    << "Participation(s) Count: " << a[i].participationCount << endl << endl;
+                break;
+            case 2:
+                cout
+                    << "Athlete #" << a[i].athleteNumber << ":\n"
+                    << "Name: " << a[i].name << endl
+                    << "Age: " << a[i].age << endl
+                    << "Discipline: " << a[i].discipline << endl
+                    << "Best Career Result: " << a[i].bestCareerResult << " m" << endl
+                    << "Best Result This Year: " << a[i].bestResultThisYear << " m" << endl
+                    << "Participation(s) Count: " << a[i].participationCount << endl << endl;
+                break;
+            default:
+                break;
+            }
+        }
+}
+
+void findAthletesByCountry(Athlete a[], int b)
+{
+    if (b == 0)
+    {
+        cout << "\nNo athletes has been added.\n";
+        return;
+    }
+    string country;
+    int choice;
+    int count = 0;
+    int c;
+    do
+    {
+        cout
+            << "\nCountries:\n"
+            << "1.   Albania\n"
+            << "2.   Bosnia and Herzegovina\n"
+            << "3.   Bulgaria\n"
+            << "4.   Greece\n"
+            << "5.   Kosovo\n"
+            << "6.   North Macedonia\n"
+            << "7.   Montenegro\n"
+            << "Enter your choice: ";
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            country = "Albania";
+            break;
+        case 2:
+            country = "Bosnia and Herzegovina";
+            break;
+        case 3:
+            country = "Bulgaria";
+            break;
+        case 4:
+            country = "Greece";
+            break;
+        case 5:
+            country = "Kosovo";
+            break;
+        case 6:
+            country = "North Macedonia";
+            break;
+        case 7:
+            country = "Montenegro";
+            break;
+        default:
+            cout << "\nInvalid choice. Please try again.\n";
+            break;
+        }
+    } while (choice < 1 || choice > 7);
+    for (int i = 0;i < b;i++)
+        if (a[i].country == country)
+            count++;
+    if (count != 0)
+        cout << "Athlete(s) from " << country << ":\n\n";
+    for (int i = 0;i < b;i++)
+        if (a[i].country == country)
+        {
+            if (a[i].discipline == "200m sprint" || a[i].discipline == "4x400 relay") c = 1;
+            else if (a[i].discipline == "Shot put" || a[i].discipline == "Pole Vault" || a[i].discipline == "Triple jump") c = 2;
+            switch (c)
+            {
+            case 1:
+                cout
+                    << "Athlete #" << a[i].athleteNumber << ":\n"
+                    << "Name: " << a[i].name << endl
+                    << "Age: " << a[i].age << endl
+                    << "Discipline: " << a[i].discipline << endl
+                    << "Best Career Result: " << a[i].bestCareerResult << " s" << endl
+                    << "Best Result This Year: " << a[i].bestResultThisYear << " s" << endl
+                    << "Participation(s) Count: " << a[i].participationCount << endl << endl;
+                break;
+            case 2:
+                cout
+                    << "Athlete #" << a[i].athleteNumber << ":\n"
+                    << "Name: " << a[i].name << endl
+                    << "Age: " << a[i].age << endl
+                    << "Discipline: " << a[i].discipline << endl
+                    << "Best Career Result: " << a[i].bestCareerResult << " m" << endl
+                    << "Best Result This Year: " << a[i].bestResultThisYear << " m" << endl
+                    << "Participation(s) Count: " << a[i].participationCount << endl << endl;
+                break;
+            default:
+                break;
+            }
+        }
+    if (count == 0)
+        cout << "\nNo athlete(s) found from " << country << ".\n";
+}
+
+void sortAthletesBySport(Athlete a[], int b)
+{
+    if (b == 0)
+    {
+        cout << "\nNo athletes has been added.\n";
+        return;
+    }
+    Athlete temp;
+    for (int i = 0;i < b;i++)
+        for (int j = 0;j + 1 < b - i; j++)
+            if (a[j].discipline > a[j + 1].discipline)
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+            else if (a[j].discipline == a[j + 1].discipline && a[j].name > a[j + 1].name)
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+    cout << "\nAthlete(s) has been successfully sorted.\n";
+}
+
+void displayAthletesByBestResult(Athlete a[], int b)
+{
+    if (b == 0)
+    {
+        cout << "\nNo athletes has been added.\n";
+        return;
+    }
+    int c = 0;
+    Athlete temp;
+    string disciplines[5]{ "200m sprint", "4x400 relay", "Shot put", "Pole Vault", "Triple jump" };
+    for (int i = 0;i < b;i++)
+        for (int j = 0;j + 1 < b - i; j++)
+        {
+            if (a[i].discipline == "200m sprint" || a[i].discipline == "4x400 relay") c = 1;
+            else if (a[i].discipline == "Shot put" || a[i].discipline == "Pole Vault" || a[i].discipline == "Triple jump") c = 2;
+            switch (c)
+            {
+            case 1:
+                if (a[j].bestResultThisYear > a[j + 1].bestResultThisYear)
+                {
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+                else if (a[j].bestResultThisYear == a[j + 1].bestResultThisYear && a[j].name > a[j + 1].name)
+                {
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+                break;
+            case 2:
+                if (a[j].bestResultThisYear < a[j + 1].bestResultThisYear)
+                {
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+                else if (a[j].bestResultThisYear == a[j + 1].bestResultThisYear && a[j].name > a[j + 1].name)
+                {
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    int count = 0;
+    for (int i = 0;i < 2;i++)
+    {
+        count = 0;
+        for (int j = 0;j < b;j++)
+            if (a[j].discipline == disciplines[i])
+                count++;
+        if (count == 0)
+            continue;
+        cout << "\nAthlete(s) in " << disciplines[i] << ":\n\n";
+        for (int j = 0;j < b;j++)
+            if (a[j].discipline == disciplines[i])
+                cout
+                << "Athlete #" << a[j].athleteNumber << ":\n"
+                << "Name: " << a[j].name << endl
+                << "Age: " << a[j].age << endl
+                << "Discipline: " << a[j].discipline << endl
+                << "Best Career Result: " << a[j].bestCareerResult << " s" << endl
+                << "Best Result This Year: " << a[j].bestResultThisYear << " s" << endl
+                << "Participation(s) Count: " << a[j].participationCount << endl << endl;
+    }
+    for (int i = 2;i < 5;i++)
+    {
+        count = 0;
+        for (int j = 0;j < b;j++)
+            if (a[j].discipline == disciplines[i])
+                count++;
+        if (count == 0)
+            continue;
+        cout << "\nAthlete(s) in " << disciplines[i] << ":\n\n";
+        for (int j = 0;j < b;j++)
+            if (a[j].discipline == disciplines[i])
+                cout
+                << "Athlete #" << a[j].athleteNumber << ":\n"
+                << "Name: " << a[j].name << endl
+                << "Age: " << a[j].age << endl
+                << "Discipline: " << a[j].discipline << endl
+                << "Best Career Result: " << a[j].bestCareerResult << " m" << endl
+                << "Best Result This Year: " << a[j].bestResultThisYear << " m" << endl
+                << "Participation(s) Count: " << a[j].participationCount << endl << endl;
+    }
+}
+
+void findAthletesByAge(Athlete a[], int b)
+{
+    if (b == 0)
+    {
+        cout << "\nNo athletes has been added.\n";
+        return;
+    }
+    int age;
+    int v_age;
+    int count = 0;
+    int c;
+    do
+    {
+        cout << "\nEnter age you want to find atheletes by: ";
+        cin >> v_age;
+        if (v_age < 0)
+        {
+            cout << "\nEnter valid age!\n";
+        }
+        else
+            age = v_age;
+    } while (v_age < 0);
+    Athlete temp;
+    for (int i = 0;i < b;i++)
+        for (int j = 0;j + 1 < b - i; j++)
+            if (a[j].name > a[j + 1].name)
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+    for (int i = 0;i < b;i++)
+        if (a[i].age == age)
+        {
+                if (a[i].discipline == "200m sprint" || a[i].discipline == "4x400 relay") c = 1;
+                else if (a[i].discipline == "Shot put" || a[i].discipline == "Pole Vault" || a[i].discipline == "Triple jump") c = 2;
+                switch (c)
+                {
+                case 1:
+                    cout
+                        << "Athlete #" << a[i].athleteNumber << ":\n"
+                        << "Name: " << a[i].name << endl
+                        << "Age: " << a[i].age << endl
+                        << "Discipline: " << a[i].discipline << endl
+                        << "Best Career Result: " << a[i].bestCareerResult << " s" << endl
+                        << "Best Result This Year: " << a[i].bestResultThisYear << " s" << endl
+                        << "Participation(s) Count: " << a[i].participationCount << endl << endl;
+                    break;
+                case 2:
+                    cout
+                        << "Athlete #" << a[i].athleteNumber << ":\n"
+                        << "Name: " << a[i].name << endl
+                        << "Age: " << a[i].age << endl
+                        << "Discipline: " << a[i].discipline << endl
+                        << "Best Career Result: " << a[i].bestCareerResult << " m" << endl
+                        << "Best Result This Year: " << a[i].bestResultThisYear << " m" << endl
+                        << "Participation(s) Count: " << a[i].participationCount << endl << endl;
+                    break;
+                default:
+                    break;
+            }
+            count++;
+        }
+    if (count == 0)
+        cout << "\nNo athletes with age of " << age << endl;
+}
+
+void displaySubMenu(Athlete a[], int b)
+{
+    int choice;
+    do
+    {
+        cout
+            << "==========Additional features==========\n"
+            << "1.  Display the athlete(s) by discipline in descending order of best result this year\n"
+            << "2.  Find athlete(s) by age and display sorted by name\n"
+            << "0.  Back to Main Menu\n"
+            << "========================================\n"
+            << "Enter your choice: ";
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            displayAthletesByBestResult(a, b);
+            break;
+        case 2:
+            findAthletesByAge(a, b);
+            break;
+        case 0:
+            cout << "\nReturning to Main Menu.\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+            break;
+        }
+    } while (choice != 0);
+}
+
+void startCompetition(Athlete a[], int b, bool& e, int h, int k, int l, int m, int n)
+{
+    if (b == 0)
+    {
+        cout << "\nNo athletes has been added.\n";
+        return;
+    }
+    int fall;
+    int possibility;
+    int d;
+    int f;
+    int g;
+    float valid_random_m;
+    float valid_random_p;
+    for (int i = 0;i < b;i++)
+    {
+        fall = rand() % 5;
+        if (fall == 0)
+        {
+            a[i].result = 0;
+            continue;
+        }
+        if (a[i].discipline == "200m sprint" || a[i].discipline == "4x400 relay") d = 1;
+        else if (a[i].discipline == "Shot put" || a[i].discipline == "Pole Vault" || a[i].discipline == "Triple jump") d = 2;
+        possibility = rand() % 1;
+        if (d == 1)
+        {
+            if (possibility == 0)
+            {
+                do
+                    valid_random_m = a[i].bestResultThisYear + rand() % 20;
+                while (valid_random_m < 0);
+                a[i].result = valid_random_m;
+            }
+            else if (possibility == 1)
+            {
+                do
+                    valid_random_p = a[i].bestCareerResult - rand() % 10;
+                while (valid_random_p < 0);
+                a[i].result = valid_random_p;
+            }
+        }
+        else if (d == 2)
+        {
+            if (possibility == 0)
+            {
+                do
+                    valid_random_m = a[i].bestResultThisYear - rand() % 20;
+                while (valid_random_m < 0);
+                a[i].result = valid_random_m;
+            }
+            else if (possibility == 1)
+            {
+                do
+                    valid_random_p = a[i].bestCareerResult + rand() % 10;
+                while (valid_random_p < 0);
+                a[i].result = valid_random_p;
+            }
+        }
+        e = true;
+    }
+    int fall_sprint = 0;
+    int fall_relay = 0;
+    int fall_shot = 0;
+    int fall_p_vault = 0;
+    int fall_t_jump = 0;
+    for (int i = 0;i < b;i++)
+    {
+        if (a[i].discipline == "200m sprint") f = 1;
+        else if (a[i].discipline == "4x400 relay") f = 2;
+        else if (a[i].discipline == "Shot put") f = 3;
+        else if (a[i].discipline == "Pole Vault") f = 4;
+        else f = 5;
+        switch (f)
+        {
+        case 1:
+            if (a[i].result == 0) {
+                a[i].place = h - fall_sprint;
+                fall_sprint++;
+            }
+            else
+            {
+                for (int j = 0; j < b; j++)
+                {
+                    if (a[j].discipline == "200m sprint")
+                        if(a[j].result == 0)
+                        continue;
+                    else if (a[i].result > a[j].result || (a[i].result == a[j].result && i > j))
+                        a[i].place++;
+                }
+            }
+            break;
+        case 2:
+            if (a[i].result == 0) {
+                a[i].place = k - fall_relay;
+                fall_relay++;
+            }
+            else {
+                for (int j = 0; j < b; j++) {
+                    if (a[j].discipline == "4x400 relay")
+                        if (a[j].result == 0)
+                            continue;
+                        else if (a[i].result > a[j].result || (a[i].result == a[j].result && i > j))
+                            a[i].place++;
+                }
+            }
+            break;
+        case 3:
+            if (a[i].result == 0) {
+                a[i].place = l - fall_shot;
+                fall_shot++;
+            }
+            else {
+                for (int j = 0; j < b; j++) {
+                    if (a[j].discipline == "Shot put")
+                        if (a[j].result == 0)
+                            continue;
+                        else if (a[i].result > a[j].result || (a[i].result == a[j].result && i > j))
+                            a[i].place++;
+                }
+            }
+            break;
+        case 4:
+            if (a[i].result == 0) {
+                a[i].place = m - fall_p_vault;
+                fall_p_vault++;
+            }
+            else {
+                for (int j = 0; j < b; j++) {
+                    if (a[j].discipline == "Pole Vault")
+                        if (a[j].result == 0)
+                            continue;
+                        else if (a[i].result > a[j].result || (a[i].result == a[j].result && i > j))
+                            a[i].place++;
+                }
+            }
+            break;
+        case 5:
+            if (a[i].result == 0) {
+                a[i].place = n - fall_t_jump;
+                fall_t_jump++;
+            }
+            else {
+                for (int j = 0; j < b; j++) {
+                    if (a[j].discipline == "Triple jump")
+                        if (a[j].result == 0)
+                            continue;
+                        else if (a[i].result > a[j].result || (a[i].result == a[j].result && i > j))
+                            a[i].place++;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+    }
+    cout << "\nThe competition has finished!\n";
+}
+
+void displayTableOfMedals(Athlete a[], int b, bool c, Athlete d[])
+{
+    if (b == 0)
+    {
+        cout << "\n\nNo athletes has been added.\n";
+        return;
+    }
+    if (!c)
+    {
+        cout << "\nStart Competition First!\n";
+        return;
+    }
+    int e;
+    string countries[7]{ "Albania","Bosnia and Herzegovina","Bulgaria","Greece","Kosovo","North Macedonia","Montenegro" };
+    int count[7]{ 0,0,0,0,0,0,0 };
+    int points[7]{ 0,0,0,0,0,0,0 };
+    for (int i = 0;i < 7;i++)
+        for (int j = 0;j < b;j++)
+            if (a[j].country == countries[i])
+                count[i]++;
+    int total_count = 0;
+    for (int f = 0;f < 7;f++)
+        if (count[f] != 0)
+            for (int i = 0;i < count[f];i++)
+            {
+                d[total_count].country = countries[f];
+                total_count++;
+            }
+    total_count = 0;
+    for (int f = 0;f < 7;f++)
+        if (count[f] != 0)
+            for (int i = 0;i < count[f];i++)
+                for (int j = 0;j < b;j++)
+                    if (a[j].country == d[total_count].country)
+                    {
+                        d[total_count].athleteNumber = a[j].athleteNumber;
+                        d[total_count].name = a[j].name;
+                        d[total_count].age = a[j].age;
+                        d[total_count].discipline = a[j].discipline;
+                        d[total_count].bestCareerResult = a[j].bestCareerResult;
+                        d[total_count].bestResultThisYear = a[j].bestResultThisYear;
+                        d[total_count].participationCount = a[j].participationCount;
+                        d[total_count].country = a[j].country;
+                        d[total_count].result = a[j].result;
+                        total_count++;
+                    }
+    for (int i = 0;i < 7;i++)
+    {
+        for (int j = 0;j < b;j++)
+            if (a[j].country == countries[i])
+                if (a[j].place == 1)
+                    points[i] += 30;
+                else if (a[j].place == 2)
+                    points[i] += 20;
+                else if (a[j].place == 3)
+                    points[i] += 10;
+                else if (a[j].place == 4)
+                    points[i] += 8;
+                else if (a[j].place == 5)
+                    points[i] += 6;
+                else if (a[j].place == 6)
+                    points[i] += 4;
+    }
+    int temp;
+    string temp2;
+    for (int i = 0;i < 7;i++)
+        for (int j = 0;j + 1 < 7 - i; j++)
+            if (points[j] > points[j + 1])
+            {
+                temp = points[j];
+                points[j] = points[j + 1];
+                points[j + 1] = temp;
+                temp2 = countries[j];
+                countries[j] = countries[j + 1];
+                countries[j + 1] = temp2;
+            }
+    int place = 7;
+    bool has = false;
+    bool first;
+    cout << "\n|===================================================Medals Table====================================================|\n" << setw(30) << left << "|Country" << setw(10) << left << "|Points" << setw(60) << left << "|Athletes - Results" << setw(16) << "|Country's Place|\n|=============================|=========|===========================================================|===============|\n";
+    for (int i = 0;i < 7;i++)
+    {
+        first = true;
+        has = false;
+        for (int j = 0;j < b;j++)
+            if (d[j].country == countries[i])
+            {
+                has = true;
+                if (first)
+                {
+                    cout << "|" << setw(29) << left << countries[i] << "|" << setw(9) << left << points[i] << "|" << setw(59) << left << (d[j].name + " - " + to_string(d[j].result)) << "|" << setw(15) << left << place << "|\n";
+                    first = false;
+                }
+                else
+                    cout << "|" << setw(29) << left << " " << "|" << setw(9) << left << " " << "|" << setw(59) << left << (d[j].name + " - " + to_string(d[j].result)) << "|" << setw(15) << left << " " << "|\n";
+            }
+        if (!has)
+            cout << "|" << setw(29) << left << countries[i] << "|" << setw(9) << left << points[i] << "|" << setw(59) << left << " " <<"|"<< setw(15) << left << place << "|\n";
+        place--;
+        if (i < 6)
+            cout << "|-----------------------------|---------|-----------------------------------------------------------|---------------|\n";
+        else
+            cout<<"|=============================|=========|===========================================================|===============|\n";
+    }
+
+}
+
+void displayManageFileMenu()
+{
+    cout
+        << "\n=====File Management=====\n"
+        << "1.  Save Data to File\n"
+        << "2.  Load Data from File\n"
+        << "0.  Back to Main Menu\n"
+        << "===========================\n"
+        << "Enter your choice: ";
+}
+
+void saveDataB(Athlete athletes[], int count, int count_sprint, int count_relay, int count_shot, int count_p_vault, int count_t_jump)
+{
+    if (count == 0)
+    {
+        cout << "\nNo athletes has been added.\n";
+        return;
+    }
+    ofstream saveFile("dataB.bin", ios_base::binary);
+    if (!saveFile)
+    {
+        cout << "\nError appeared while opening the file!\n";
+        saveFile.close();
+        return;
+    }
+    int size_name;
+    const char* str_name;
+    int size_discipline;
+    const char* str_discipline;
+    int size_country;
+    const char* str_country;
+    saveFile.write((char*)&count, sizeof(int));
+    for (int i = 0;i < count;i++)
+    {
+        size_name = athletes[i].name.size();
+        str_name = athletes[i].name.c_str();
+        size_discipline = athletes[i].discipline.size();
+        str_discipline = athletes[i].discipline.c_str();
+        size_country = athletes[i].country.size();
+        str_country = athletes[i].country.c_str();
+        saveFile.write((char*)&athletes[i].athleteNumber, sizeof(int));
+        saveFile.write((char*)&size_name, sizeof(int));
+        saveFile.write(str_name, size_name + 1);
+        saveFile.write((char*)&athletes[i].age, sizeof(int));
+        saveFile.write((char*)&size_discipline, sizeof(int));
+        saveFile.write(str_discipline, size_discipline + 1);
+        saveFile.write((char*)&athletes[i].bestCareerResult, sizeof(float));
+        saveFile.write((char*)&athletes[i].bestResultThisYear, sizeof(float));
+        saveFile.write((char*)&athletes[i].participationCount, sizeof(int));
+        saveFile.write((char*)&size_country, sizeof(int));
+        saveFile.write(str_country, size_country + 1);
+        saveFile.write((char*)&athletes[i].result, sizeof(float));
+        saveFile.write((char*)&athletes[i].place, sizeof(int));
+    }
+    saveFile.write((char*)&count_sprint, sizeof(int));
+    saveFile.write((char*)&count_relay, sizeof(int));
+    saveFile.write((char*)&count_shot, sizeof(int));
+    saveFile.write((char*)&count_p_vault, sizeof(int));
+    saveFile.write((char*)&count_t_jump, sizeof(int));
+    saveFile.close();
+    cout << "\nData succesfully saved.\n";
+}
+
+void loadDataB(Athlete athletes[], int &count, int &count_sprint, int &count_relay, int &count_shot, int &count_p_vault, int &count_t_jump)
+{
+    ifstream loadFile("dataB.bin", ios_base::binary | ios_base::ate);
+    if (!loadFile)
+    {
+        cout << "\nError appeared while opening the file!\n";
+        loadFile.close();
+        return;
+    }    
+    streampos fileSize = loadFile.tellg();
+    if (fileSize == 0)
+    {
+        cout << "\nNo data has been saved in the file.\n";
+        loadFile.close();
+        return;
+    }
+    loadFile.seekg(0, ios_base::beg);
+    loadFile.read((char*)&count, sizeof(int));
+    int size_name, size_discipline, size_country;
+    char* str_name, * str_discipline, * str_country;
+    for (int i = 0;i < count;i++)
+    {
+        loadFile.read((char*)&athletes[i].athleteNumber, sizeof(int));
+        loadFile.read((char*)&size_name, sizeof(int));
+        str_name = (char*)calloc(size_name + 1, 1);
+        loadFile.read(str_name, size_name + 1);
+        athletes[i].name = str_name;
+        loadFile.read((char*)&athletes[i].age, sizeof(int));
+        loadFile.read((char*)&size_discipline, sizeof(int));
+        str_discipline = (char*)calloc(size_discipline + 1, 1);
+        loadFile.read(str_discipline, size_discipline + 1);
+        athletes[i].discipline = str_discipline;
+        loadFile.read((char*)&athletes[i].bestCareerResult, sizeof(float));
+        loadFile.read((char*)&athletes[i].bestResultThisYear, sizeof(float));
+        loadFile.read((char*)&athletes[i].participationCount, sizeof(int));
+        loadFile.read((char*)&size_country, sizeof(int));
+        str_country = (char*)calloc(size_country + 1, 1);
+        loadFile.read(str_country, size_country + 1);
+        athletes[i].country = str_country;
+        loadFile.read((char*)&athletes[i].result, sizeof(float));
+        loadFile.read((char*)&athletes[i].place, sizeof(int));
+    }
+    loadFile.read((char*)&count_sprint, sizeof(int));
+    loadFile.read((char*)&count_relay, sizeof(int));
+    loadFile.read((char*)&count_shot, sizeof(int));
+    loadFile.read((char*)&count_p_vault, sizeof(int));
+    loadFile.read((char*)&count_t_jump, sizeof(int));
+    loadFile.close();
+    cout << "\nData succesfully loaded\n";
+}
+/*
+void saveDataT(Athlete athletes[], int count, int count_sprint, int count_relay, int count_shot, int count_p_vault, int count_t_jump)
+{
+    if (count == 0)
+    {
+        cout << "\n\nNo athletes has been added.\n";
+        return;
+    }
+    ofstream saveFile("dataT.txt");
+    if(!saveFile)
+    {
+        cout << "\nError appeared while opening the file!\n";
+        saveFile.close();
+        return;
+    }
+    saveFile << count << endl;
+    for (int i = 0;i < count;i++)
+        saveFile
+            << athletes[i].athleteNumber << endl
+            << athletes[i].name << endl
+            << athletes[i].age << endl
+            << athletes[i].discipline << endl
+            << athletes[i].bestCareerResult << endl
+            << athletes[i].bestResultThisYear << endl
+            << athletes[i].participationCount << endl
+            << athletes[i].country << endl
+            << athletes[i].result << endl
+            << athletes[i].place << endl;
+    saveFile
+        << count_sprint << endl
+        << count_relay << endl
+        << count_shot << endl
+        << count_p_vault << endl
+        << count_t_jump << endl;
+    saveFile.close();
+}
+
+void loadDataT(Athlete athletes[], int& count, int& count_sprint, int& count_relay, int& count_shot, int& count_p_vault, int& count_t_jump)
+{
+    ifstream loadFile("dataT.txt", ios_base::ate);
+    if (!loadFile)
+    {
+        cout << "\nError appeared while opening the file!\n";
+        loadFile.close();
+        return;
+    }
+    streampos fileSize = loadFile.tellg();
+    if (fileSize == 0)
+    {
+        cout << "\nNo data has been saved in the file.\n";
+        loadFile.close();
+        return;
+    }
+    loadFile.seekg(0, ios_base::beg);
+    loadFile >> count;
+    for (int i = 0;i < count;i++)
+    {
+        loadFile >> athletes[i].athleteNumber;
+        loadFile.ignore();
+        getline(loadFile, athletes[i].name);
+        loadFile >> athletes[i].age;
+        loadFile.ignore();
+        getline(loadFile, athletes[i].discipline);
+        loadFile >> athletes[i].bestCareerResult;
+        loadFile.ignore();
+        loadFile >> athletes[i].bestResultThisYear;
+        loadFile.ignore();
+        loadFile >> athletes[i].participationCount;
+        loadFile.ignore();
+        getline(loadFile, athletes[i].country);
+        loadFile >> athletes[i].result;
+        loadFile.ignore();
+        loadFile >> athletes[i].place;
+        loadFile.ignore();
+    }
+    loadFile >> count_sprint;
+    loadFile.ignore();
+    loadFile >> count_relay;
+    loadFile.ignore();
+    loadFile >> count_shot;
+    loadFile.ignore();
+    loadFile >> count_p_vault;
+    loadFile.ignore();
+    loadFile >> count_t_jump;
+    loadFile.ignore();
+    cout << "\nData successfully loaded\n";
+    loadFile.close();
+}*/
+
+void manageFile(Athlete athletes[], int &count, int &count_sprint, int &count_relay, int &count_shot, int &count_p_vault, int &count_t_jump)
+{
+    int choice;
+    do
+    {
+        displayManageFileMenu();
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            saveDataB(athletes, count, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump);
+            break;
+        case 2:
+            loadDataB(athletes, count, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump);
+            break;
+        case 0:
+            cout << "\nReturning to Main Menu.\n";
+            break;
+        default:
+            break;
+        }
+    } while (choice != 0);
+}
+
+int main()
+{
+    int count = 0;
+    int count_sprint = 0;
+    int count_relay = 0;
+    int count_shot = 0;
+    int count_p_vault = 0;
+    int count_t_jump = 0;
+    Athlete athletes[35]; // 5 дисциплини по 7 атлета
+    Athlete d[35];
+    bool competition = false;
+    //loadDataT(athletes, count, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump);
+    loadDataB(athletes, count, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump);
+    int choice;
+    do {
+        displayMenu();
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            addAthletes(athletes, count, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump, competition);
+            break;
+        case 2:
+            displayAthletes(athletes, count);
+            break;
+        case 3:
+            findAthleteWithMostParticipations(athletes, count);
+            break;
+        case 4:
+            findAthletesByCountry(athletes, count);
+            break;
+        case 5:
+            sortAthletesBySport(athletes, count);
+            break;
+        case 6:
+            manageFile(athletes, count, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump);
+            break;
+        case 7:
+            displaySubMenu(athletes, count);
+            break;
+        case 8:
+            startCompetition(athletes, count, competition, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump);
+            break;
+        case 9:
+            displayTableOfMedals(athletes, count, competition, d);
+            break;
+        case 0:
+            //saveDataT(athletes, count, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump);
+            saveDataB(athletes, count, count_sprint, count_relay, count_shot, count_p_vault, count_t_jump);
+            cout << "\nExiting the program.\n";
+            break;
+        default:
+            cout << "Invalid choice. Please try again.\n";
+            break;
+        }
+    } while (choice != 0);
+
+    return 0;
+}
